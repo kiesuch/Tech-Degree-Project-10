@@ -9,8 +9,14 @@ export default class Header extends React.PureComponent {
 		const { context } = this.props;
 		const authUser = context.authenticatedUser;
 		console.log(authUser);
+		
+		// Create variable to hold the object within two arrays.
+		let authUserObject = null;
+		
+		// If the variable authUser is not null, then set the authUserObject to the object data nested two arrays deep.
 		if(authUser){
-			console.log(authUser.firstName);
+			authUserObject = authUser[0][0];
+			console.log(authUserObject.firstName);
 		}
 		return (
 			<div className="header">
@@ -19,7 +25,7 @@ export default class Header extends React.PureComponent {
 					<nav>
 						{authUser ? (
 							<React.Fragment>
-							<span>Welcome, {authUser.emailAddress}, {authUser.firstName}, {authUser.lastName}!</span>
+							<span>Welcome, {authUserObject.firstName} {authUserObject.lastName}!</span>
 								<Link to="/signout">Sign Out</Link>
 							</React.Fragment>
 						) : (
