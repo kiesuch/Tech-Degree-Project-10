@@ -1,6 +1,8 @@
 // Referenced "React Authentication" Course/Instruction Pages
 
 import React, { Component } from 'react';
+// Import js-cookie 
+import Cookies from 'js-cookie';
 // Importing the helper class within Data.js
 import Data from './Data';
 
@@ -9,7 +11,7 @@ const Context = React.createContext();
 export class Provider extends Component {
 
 	state = {
-		authenticatedUser: null
+		authenticatedUser: Cookies.getJSON('authenticatedUser') || null
 	};
 
 	// Initialized a new instance of the Data class in the constructor.
@@ -47,12 +49,17 @@ export class Provider extends Component {
 					authenticatedUser: user
 				};
 			});
+			const cookieOptions = {
+				expires: 1 // 1 day
+			};
+			Cookies.set('authenticatedUser', JSON.stringify(user), {cookieOptions});
 		}
 		return user;
 	}
 
 	signOut = () => {
 		this.setState({ authenticatedUser: null });
+		Cookies.remove('authenticatedUser');
 	}
 }
 
