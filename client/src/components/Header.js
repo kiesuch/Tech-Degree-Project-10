@@ -8,7 +8,8 @@ class Header extends React.PureComponent {
 	render() {
 		const { context } = this.props;
 		const authUser = context.authenticatedUser;
-		console.log(authUser);
+		//console.log("authUser Test: ");
+		//console.log(authUser);
 		
 		// Create variable to hold the object within two arrays.
 		let authUserObject = null;
@@ -16,12 +17,13 @@ class Header extends React.PureComponent {
 		// If the variable authUser is not null, then set the authUserObject to the object data nested two arrays deep.
 		if(authUser){
 			authUserObject = authUser[0][0];
-			console.log(authUserObject.firstName);
+			//console.log("User First Name Test: ");
+			//console.log(authUserObject.firstName);
 		}
 		return (
 			<div className="header">
 				<div className="bounds">
-					<h1 className="header--logo">Courses</h1>
+					<Link to="/courses"><h1 className="header--logo">Courses</h1></Link>
 					<nav>
 						{authUser ? (
 							<React.Fragment>

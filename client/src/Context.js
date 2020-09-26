@@ -11,7 +11,7 @@ const Context = React.createContext();
 export class Provider extends Component {
 
 	state = {
-		authenticatedUser: Cookies.getJSON('authenticatedUser') || null
+		authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
 	};
 
 	// Initialized a new instance of the Data class in the constructor.
@@ -29,7 +29,7 @@ export class Provider extends Component {
 			data: this.data,
 			actions: {
 				signIn: this.signIn,
-				signOut: this.signOut
+				signOut: this.signOut,
 			},
 		};
 		return (
@@ -60,7 +60,7 @@ export class Provider extends Component {
 	signOut = () => {
 		this.setState({ authenticatedUser: null });
 		Cookies.remove('authenticatedUser');
-	}
+	}	
 }
 
 export const Consumer = Context.Consumer;
