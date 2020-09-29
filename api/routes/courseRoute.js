@@ -201,6 +201,13 @@ app.put('/api/courses/:id', [
 	if (course){
 		// Check to see if the user owns the course
 		if (user.id === course.userId){
+			await course.update({
+                userId: req.currentUser.id,
+                title: req.body.title,
+                description: req.body.description,
+                estimatedTime: req.body.estimatedTime,
+                materialsNeeded: req.body.materialsNeeded,
+            })
 			// User owns the course
 			res.sendStatus(204).end();
 		} else {
