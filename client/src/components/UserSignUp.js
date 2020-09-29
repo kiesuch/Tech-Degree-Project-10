@@ -13,6 +13,7 @@ export default class UserSignUp extends Component {
 		lastName: '',
 		emailAddress: '',
 		password: '',
+		confirmPass: '',
 		errors: [],
 	}
 
@@ -22,6 +23,7 @@ export default class UserSignUp extends Component {
 			lastName,
 			emailAddress,
 			password,
+			confirmPass,
 			errors,
 		} = this.state;
 
@@ -65,6 +67,13 @@ export default class UserSignUp extends Component {
 									value={password} 
 									onChange={this.change} 
 									placeholder="Password" />
+								<input 
+									id="confirmPass" 
+									name="confirmPass"
+									type="password"
+									value={confirmPass} 
+									onChange={this.change} 
+									placeholder="Confirm Password" />
 							</React.Fragment>
 						)} />
 					<p>
@@ -75,6 +84,7 @@ export default class UserSignUp extends Component {
 		);
 	}
 
+	// Handles the changes to text boxes
 	change = (event) => {
 		const name = event.target.name;
 		const value = event.target.value;
@@ -86,6 +96,7 @@ export default class UserSignUp extends Component {
 		});
 	}
 
+	// Handles the button submits
 	submit = () => {
 		const { context } = this.props;
 		const {
@@ -93,33 +104,42 @@ export default class UserSignUp extends Component {
 			lastName,
 			emailAddress,
 			password,
+			confirmPass,
 		} = this.state;
+		
+		// Check to see if the password and confirmPass fields are the same
+		if (password === confirmPass){
+			// Create user variable
+			const user = {
+				firstName,
+				lastName,
+				emailAddress,
+				password,
+			};
 
-		// Create user variable
-		const user = {
-			firstName,
-			lastName,
-			emailAddress,
-			password,
-		};
-
-		context.data.createUser(user)
-			.then( errors => {
-				if (errors.length) {
-					this.setState({ errors });
-				} else {
-					context.actions.signIn(emailAddress, password)
-						.then(() => {
-							console.log(`${emailAddress} is successfully signed up and authenticated!`);
-							this.props.history.push('/');		
-						});
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-				this.props.history.push('/error');
-			});
-	
+			// Call the create user function
+			context.data.createUser(user)
+				.then( errors => {
+					if (errors.length) {
+						this.setState({ errors });
+					} else {
+						context.actions.signIn(emailAddress, password)
+							.then(() => {
+								console.log(`${emailAddress} is successfully signed up and authenticated!`);
+								this.props.history.push('/');		
+							});
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					this.props.history.push('/error');
+				});
+		} else {
+			// Create new error to display if the passwords do not match
+			let error = "The passwords do not match";
+			this.setState({ errors: [error] });
+			console.log("User creation failed");
+		}
 	}
 
 	cancel = () => {

@@ -12,6 +12,7 @@ export class Provider extends Component {
 
 	state = {
 		authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
+		userPass: Cookies.getJSON('userPass') || null
 	};
 
 	// Initialized a new instance of the Data class in the constructor.
@@ -21,11 +22,12 @@ export class Provider extends Component {
 	}
 
 	render() {
-		const { authenticatedUser } = this.state;
+		const { authenticatedUser, userPass } = this.state;
 		
 		// Created a Value object
 		const value = {
 			authenticatedUser,
+			userPass,
 			data: this.data,
 			actions: {
 				signIn: this.signIn,
@@ -43,23 +45,29 @@ export class Provider extends Component {
 	// Specify the parameters needed to the signIn function
 	signIn = async (emailAddress, password) => {
 		const user = await this.data.getUser(emailAddress, password);
+		console.log(password);
 		if (user !== null) {
 			this.setState(() => {
 				return {
-					authenticatedUser: user
+					authenticatedUser: user,
+					userPass: password
 				};
 			});
 			const cookieOptions = {
 				expires: 1 // 1 day
 			};
 			Cookies.set('authenticatedUser', JSON.stringify(user), {cookieOptions});
+			Cookies.set('userPass', JSON.stringify(this.state.userPass), {cookieOptions});
+			//console.log(this.state.userPass);
 		}
 		return user;
 	}
 
 	signOut = () => {
 		this.setState({ authenticatedUser: null });
+		this.setState({ password: null });
 		Cookies.remove('authenticatedUser');
+		Cookies.remove('userPass');
 	}	
 }
 

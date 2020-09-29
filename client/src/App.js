@@ -4,8 +4,7 @@ import React from 'react';
 import {
 	BrowserRouter,
 	Switch,
-	Route,
-	Redirect
+	Route
 } from "react-router-dom";
 import './global.css';
 
@@ -14,7 +13,9 @@ import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
 import NotFound from './components/NotFound';
+import Error from './components/Error';
 import Authenticated from './components/Authenticated'; // Authentication Test
 
 import UserSignUp from './components/UserSignUp'; // SIGN UP (clarification)
@@ -33,6 +34,7 @@ const HeaderWithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
 const CourseDetailWithContext = withContext(CourseDetail);
 const CreateCourseWithContext = withContext(CreateCourse);
+const UpdateCourseWithContext = withContext(UpdateCourse);
 const AuthenticatedWithContext = withContext(Authenticated); // Authentication Test
 const NotFoundWithContext = withContext(NotFound);
 
@@ -45,14 +47,15 @@ export default () => (
 		<div>
 		<HeaderWithContext />	
 			<Switch>
-				<Route exact path = '/' ><Redirect to = '/courses'></Redirect></Route>
-				<Route exact path = "/courses" component = {CoursesWithContext} />
+				<Route exact path = '/' component = {CoursesWithContext}></Route>
 				<PrivateRoute path = "/authenticated" component = {AuthenticatedWithContext} /> {/* Private Route Test*/}
-				<Route exact path = "/courses/course-detail" component = {CourseDetailWithContext} />
-				<Route path = "/courses/create" component = {CreateCourseWithContext} />
+				<PrivateRoute path = "/courses/create" component = {CreateCourseWithContext} />
+				<PrivateRoute path = "/courses/:id/update" component = {UpdateCourseWithContext} />
+				<Route exact path = "/courses/:id" component = {CourseDetailWithContext} />
 				<Route exact path = "/signin" component = {UserSignInWithContext} />
 				<Route exact path = "/signup" component = {UserSignUpWithContext} />
 				<Route exact path = "/signout" component = {UserSignOutWithContext} />
+				<Route exact path = "/error" component = {Error} />
 				<Route component = {NotFoundWithContext} />
 			</Switch>
 		</div>

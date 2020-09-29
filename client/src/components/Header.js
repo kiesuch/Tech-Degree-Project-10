@@ -4,12 +4,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Header extends React.PureComponent {
-	render() {
-		const { context } = this.props;
+export default (props) => {
+	/*render() {*/
+		const { context } = props;
 		const authUser = context.authenticatedUser;
 		//console.log("authUser Test: ");
-		//console.log(authUser);
+		// console.log(authUser);
 		
 		// Create variable to hold the object within two arrays.
 		let authUserObject = null;
@@ -23,7 +23,7 @@ class Header extends React.PureComponent {
 		return (
 			<div className="header">
 				<div className="bounds">
-					<Link to="/courses"><h1 className="header--logo">Courses</h1></Link>
+					<Link to="/"><h1 className="header--logo">Courses</h1></Link>
 					<nav>
 						{authUser ? (
 							<React.Fragment>
@@ -40,7 +40,7 @@ class Header extends React.PureComponent {
 				</div>
 			</div>
 		);
-	}
+	/*}*/
 };
 
-export default Header;
+//export default Header;
