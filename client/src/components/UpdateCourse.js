@@ -40,7 +40,7 @@ class UpdateCourse extends Component {
 			.catch((error) =>{
 				console.log("componentDidMount Error: " + error);
 				console.log("this.state.courses test: (.catch) ");
-				this.props.history.push("/");
+				this.props.history.push("/notfound");
 			});
 		
 		this.setState({

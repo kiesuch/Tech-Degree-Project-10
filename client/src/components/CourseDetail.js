@@ -34,8 +34,7 @@ class CourseDetails extends Component{
 		materialsNeeded: '',
 		ownerId: '',
 		ownerFirstName: '',
-		ownerLastName: '',
-		materialsNeededList: []
+		ownerLastName: ''
 	}
 	
 	componentDidMount(){
@@ -46,7 +45,7 @@ class CourseDetails extends Component{
 		// console.log(context.data.getCourse(courseId.id));
 		
 		context.data.getCourse(courseId.id)
-			.then((courseInfo) =>
+			.then((courseInfo) => 
 				this.setState({	title: courseInfo.course.title,
 								description: courseInfo.course.description,
 								estimatedTime: courseInfo.course.estimatedTime,
@@ -59,12 +58,8 @@ class CourseDetails extends Component{
 			.catch((error) =>{
 				console.log("componentDidMount Error: " + error);
 				console.log("this.state.courses test: (.catch) ");
-				this.props.history.push("/");
+				this.props.history.push("/notfound");
 			});
-		
-		this.setState({
-			materialsNeededList: this.state.materialsNeeded.split("*")
-		})	
 	}
 	
 	render(){
