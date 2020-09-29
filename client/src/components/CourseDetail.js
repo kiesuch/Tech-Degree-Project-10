@@ -64,31 +64,46 @@ class CourseDetails extends Component{
 		
 		this.setState({
 			materialsNeededList: this.state.materialsNeeded.split("*")
-		})
+		})	
 	}
 	
 	render(){
 		const { context } = this.props;
-		const authUser = context.authenticatedUser;
-		const authUserObject = authUser[0][0];
 		let courseOwner = false;
+		const courseId = this.state.courseId;
+		let deleteCourse = null;
 		
-		// Check to see if the current user is the course owner
-		if(authUserObject.id === this.state.ownerId){
-			courseOwner = true;
-		} else {
-			courseOwner = false;
+		
+		if (context.authenticatedUser){
+			const authUser = context.authenticatedUser;
+			const authUserObject = authUser[0][0];
+			const userPass = context.userPass;
+			// Check to see if the current user is the course owner
+			if(authUserObject.id === this.state.ownerId){
+				courseOwner = true;
+			} else {
+				courseOwner = false;
+			}
+			//console.log(courseOwner);
+			//console.log(authUserObject.id);
+			//console.log(this.state.ownerId);
+			
+			deleteCourse = () => {
+				// **** Searched Unit 10 Slack for "Delete" ****
+				// **** Refresh code referenced from Slack: Response to "Anne B" from Slack Moderator "Marie" ****
+				context.data.deleteCourse(courseId, authUserObject.emailAddress, userPass)
+					.then( () => window.location.href = "/"); 
+				// this.props.history.push('/'); // Deleted course still shows up until page is refreshed
+			}
+			// console.log(deleteCourse);
+			
 		}
-		
-		//console.log(courseOwner);
-		//console.log(authUserObject.id);
-		//console.log(this.state.ownerId);
 		
 		const materialsList = this.state.materialsNeededList.map((material) => {
 			return(
 				<ReactMarkdown key={material}>{this.state.materialsNeeded}</ReactMarkdown>
 			)
-		});	
+		});
 
 		// Button's conditional rendering referenced from: https://reactjs.org/docs/conditional-rendering.html
 		return(
@@ -99,7 +114,7 @@ class CourseDetails extends Component{
 						{ courseOwner ?
 							<span>
 								<Link className="button" to={`/courses/${this.state.courseId}/update`}>Update Course</Link>
-								<Link className="button" to={`/courses/${this.state.courseId}/delete`}>Delete Course</Link>
+								<button className="button" onClick = {deleteCourse}>Delete Course</button>
 							</span> :
 							<div></div>
 						}
@@ -134,6 +149,7 @@ class CourseDetails extends Component{
 					</div>
 				</div>
 			</div>
+			
 		)	
 	}	
 }

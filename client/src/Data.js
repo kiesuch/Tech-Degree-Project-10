@@ -114,7 +114,6 @@ export default class Data {
 	}	
 	
 	// PUT Update for a Course
-	
 	async updateCourse(id, updatedCourse, emailAddress, password) {
 		const response = await this.api(`/courses/${id}`, 'PUT', updatedCourse, true, { emailAddress, password });
 		console.log("Response Test (Update Course) : ");
@@ -136,12 +135,12 @@ export default class Data {
 	// DELETE Course
 	async deleteCourse(id, emailAddress, password) {
 		const response = await this.api(`/courses/${id}`, 'DELETE', null, true, { emailAddress, password });
-		console.log("Respons Test (Delete Course) : ");
+		console.log("Response Test (Delete Course) : ");
 		console.log(response);
-		if (response.status === 200) {
+		if (response.status === 204) {
 			return [];
 		}
-		else if (response.status === 400) {
+		else if (response.status === 401) {
 			return response.json().then(data => {
 				return data.errors;
 			});

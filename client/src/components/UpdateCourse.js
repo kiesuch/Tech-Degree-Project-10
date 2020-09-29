@@ -185,9 +185,8 @@ class UpdateCourse extends Component {
 			
 		} else {
 			// Prevent the unauthorized user from modifying the course
-				let error = "You do not own this course";
-				this.setState({ errors: [error] });
 				console.log("Course Update has failed");
+				this.props.history.push('/forbidden');
 		}
 	}
 	
