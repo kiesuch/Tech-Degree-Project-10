@@ -98,12 +98,6 @@ class CourseDetails extends Component{
 			// console.log(deleteCourse);
 			
 		}
-		
-		const materialsList = this.state.materialsNeededList.map((material) => {
-			return(
-				<ReactMarkdown key={material}>{this.state.materialsNeeded}</ReactMarkdown>
-			)
-		});
 
 		// Button's conditional rendering referenced from: https://reactjs.org/docs/conditional-rendering.html
 		return(
@@ -142,7 +136,7 @@ class CourseDetails extends Component{
 								</li>
 								<li className="course--stats--list--item">
 									<h4>Materials Needed</h4>
-									{materialsList}
+									<ReactMarkdown>{this.state.materialsNeeded}</ReactMarkdown>
 								</li>
 							</ul>
 						</div>

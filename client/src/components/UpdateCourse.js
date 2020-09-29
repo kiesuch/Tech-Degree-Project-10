@@ -119,7 +119,7 @@ class UpdateCourse extends Component {
 														type="text"
 														value={materialsNeeded}
 														onChange={this.change}
-														placeholder="List Materials" 
+														placeholder="List Materials - (Preface each item on a newline with an '*')" 
 													/>
 											</li>
 										</ul>
@@ -175,7 +175,7 @@ class UpdateCourse extends Component {
 						this.setState({ errors });
 					} else {
 						console.log("Course was Updated")
-						this.props.history.push('/');
+						this.props.history.push(`/courses/${this.state.courseId}`);
 					}
 				})
 				.catch((error) => {
